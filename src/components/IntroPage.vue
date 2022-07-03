@@ -1,5 +1,6 @@
 <template>
-  <div >
+  <div id="canvas" style="background-color: red ">
+
   </div>
 </template>
 
@@ -8,7 +9,7 @@ import * as THREE from "three";
 //import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 export default {
-  name: 'ImageFrame',
+  name: 'IntroPage',
   props: {
     msg: String
   }, created() {
@@ -36,11 +37,15 @@ export default {
   methods:{
 
     init(){
-      this.WIDTH = window.innerWidth;
-      this.HEIGHT = window.innerHeight;
+      var container = document.getElementById('canvas');
+
+      this.WIDTH = window.innerWidth || document.body.clientWidth;
+      this.HEIGHT = window.innerHeight || document.body.clientHeight;
+
+
       this.scene = new THREE.Scene();
       this.scene.background = new THREE.Color("#000000"); //배경 컬러
-      this.camera = new THREE.PerspectiveCamera(75, this.WIDTH / this.HEIGHT, 0.1, 1000);
+      this.camera = new THREE.PerspectiveCamera(75, this.WIDTH / this.HEIGHT, 9.1, 1000);
       this.camera.position.set(0, this.cameraY, this.cameraZ);
 
 
@@ -50,7 +55,8 @@ export default {
       this.renderer.shadowMap.enabled = true;
       //그림자 활성화
 
-      document.body.appendChild(this.renderer.domElement);
+      //document.body.appendChild(this.renderer.domElement);
+      container.appendChild(this.renderer.domElement);
 
       //조명 넣기
       var light = new THREE.HemisphereLight(0xffffff, 0x080820, 0.8);
@@ -174,6 +180,11 @@ export default {
         }
         this.camera.position.z =  this.cameraZ;
         this.camera.position.y =  this.cameraY;
+
+        //끝
+        // if(this.cameraZ <= 2){
+        //   this.$router.push("/hello")
+        // }
       }
 
 
