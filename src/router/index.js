@@ -1,6 +1,8 @@
 import { createWebHistory, createRouter } from "vue-router";
-import IntroPage from '../components/IntroPage';
+//import IntroPage from '../components/IntroPage';
+import GalleryPage from '../components/GalleryPage';
 import HelloWorld from '../components/HelloWorld';
+
 import AppVue from '../App';
 
 const routes = [
@@ -14,10 +16,15 @@ const routes = [
         name: "hello",
         component: HelloWorld,
     },
+    // {
+    //     path: "/intro",
+    //     name: "Home",
+    //     component: IntroPage,
+    // },
     {
-        path: "/intro",
-        name: "Home",
-        component: IntroPage,
+        path: "/gallery",
+        name: "gallery",
+        component: GalleryPage,
     },
     // {
     //     path: "/about",

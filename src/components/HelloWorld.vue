@@ -18,8 +18,8 @@ export default {
   },
   mounted() {
     console.log("mounted")
-    // this.init();
-    // this.animate();
+     this.init();
+     this.animate();
   },
   methods:{
     init: function() {
