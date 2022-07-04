@@ -17,8 +17,9 @@ export default {
   },
   mounted() {
     console.log("mounted")
-    this.init();
-    this.animate();
+    this.stageReady();
+    this.objectReady();
+    this.animateAction();
 
 
   },
@@ -30,13 +31,13 @@ export default {
       cameraY : 80,
       cameraZ : 440,
       isAnimate : false,
-      loadingImage : 0
+      loadingImage : 0,
+      objectZ : 0,
 
     }
   },
   methods:{
-
-    init(){
+    stageReady(){
       var container = document.getElementById('canvas');
 
       this.WIDTH = window.innerWidth || document.body.clientWidth;
@@ -63,29 +64,6 @@ export default {
       light.position.set(100, 100, 0);
       this.scene.add(light);
 
-
-      {
-
-        const geometry = new THREE.BoxGeometry(400, 400, 2);
-        const material = new THREE.MeshPhongMaterial({
-          // map: imageMap,
-          color: 0x464946,
-        });
-        const wallMesh = new THREE.Mesh(geometry, material);
-
-        wallMesh.position.set(0, 0, -1);
-        wallMesh.receiveShadow = true; //default is false
-        // wallMesh.castShadow = true;
-        //this.scene.add(wallMesh);
-      }
-      this.addHomeDoor();
-      for (let i = 0; i <= this.totalNum; i++) {
-        this.addBox(i);
-        // console.log(i);
-      }
-      this.isAnimate=true;
-      this.addLight(15, 15, 20);
-
       // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
       // this.controls.maxDistance = 440;
       //
@@ -96,12 +74,60 @@ export default {
       // this.scene.add(gridHelper);
 
 
+    },
+    objectReady(){
+      const geometry = new THREE.BoxGeometry(400, 400, 2);
+      const material = new THREE.MeshPhongMaterial({
+        // map: imageMap,
+        color: 0x464946,
+      });
+      const wallMesh = new THREE.Mesh(geometry, material);
 
+      wallMesh.position.set(0, 0, -1);
+      wallMesh.receiveShadow = true; //default is false
+      // wallMesh.castShadow = true;
+      //this.scene.add(wallMesh);
+
+      this.addHomeDoor();
+      for (let i = 0; i <= this.totalNum; i++) {
+        this.addBox(i);
+        // console.log(i);
+      }
+      this.isAnimate=true;
+      this.addLight(15, 15, 20);
+    },
+
+
+    animateAction(){
+      //this.controls.update();
+      //this.camera.lookAt(this.scene.position);
+
+      if(this.totalNum <= this.loadingImage){
+
+        if(this.cameraZ > 2){
+          this.cameraZ = this.cameraZ - 0.9;
+        }
+        if(this.cameraY > 2.5){
+          this.cameraY = this.cameraY - 0.19;
+        }
+        this.camera.position.z =  this.cameraZ;
+        this.camera.position.y =  this.cameraY;
+
+        //끝
+        if(this.cameraZ <= 2){
+          this.$router.push("/gallery")
+        }
+      }
+
+
+      this.camera.updateProjectionMatrix();
+      this.renderer.render(this.scene, this.camera);
+      requestAnimationFrame(this.animateAction);
     },
     addHomeDoor(){
       const geometry = new THREE.BoxGeometry(16, 30, 2);
       const material = new THREE.MeshPhongMaterial({
-         color: 0xFFFFFF,
+        color: 0xFFFFFF,
       });
       const cardMesh = new THREE.Mesh(geometry, material);
       cardMesh.position.set(0, 0, 0); //카드 위치 지정
@@ -134,16 +160,15 @@ export default {
         let x = Math.random() * 250 - 150; // - 100 ~ 100 까지 랜덤
         // let y = i * 5;
         let y = Math.random() * 220 - 70;
-        let z = Math.random() * 400 - 10;
+        //let z = Math.random() * 400 - 10;
 
-        cardMesh.position.set(x, y, z); //카드 위치 지정
-        cardMesh.rotation.set(Math.random() * 30, 0, Math.random() * 30); //카드의 회전 지정
-
+        cardMesh.position.set(x, y, this.objectZ); //카드 위치 지정
+        cardMesh.rotation.set(Math.random() * 30, 0, Math.random() * 10); //카드의 회전 지정
+        this.objectZ +=3.5
         this.scene.add(cardMesh);
         this.loadingImage++;
       });
     },
-
     addLight(){
       const color = 0xffffff;
       const intensity = 0.4;
@@ -166,32 +191,7 @@ export default {
       // scene.add(helper);
     },
 
-    animate(){
-      //this.controls.update();
-      //this.camera.lookAt(this.scene.position);
 
-      if(this.totalNum <= this.loadingImage){
-
-        if(this.cameraZ > 2){
-          this.cameraZ = this.cameraZ - 0.7;
-        }
-        if(this.cameraY > 2.5){
-          this.cameraY = this.cameraY - 0.15;
-        }
-        this.camera.position.z =  this.cameraZ;
-        this.camera.position.y =  this.cameraY;
-
-        //끝
-        // if(this.cameraZ <= 2){
-        //   this.$router.push("/hello")
-        // }
-      }
-
-
-      this.camera.updateProjectionMatrix();
-      this.renderer.render(this.scene, this.camera);
-      requestAnimationFrame(this.animate);
-    }
   }
 
 

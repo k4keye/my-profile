@@ -1,12 +1,12 @@
 <template>
-  <div id="canvas1" style="background-color: red ">
+  <div id="canvas1" >
 
   </div>
 </template>
 
 <script>
 import * as THREE from "three";
-//import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 export default {
   name: 'GalleryPage',
@@ -20,9 +20,12 @@ export default {
     // this.init2();
     // this.animate2();
 
-    this.init();
-    this.animate();
+    // this.init();
+    // this.animate();
 
+    this.stageReady();
+    this.objectReady();
+    this.animateAction();
 
   },
   data(){
@@ -40,7 +43,7 @@ export default {
   },
   methods:{
 
-    init(){
+    stageReady(){
       var container = document.getElementById('canvas1');
 
       this.WIDTH = window.innerWidth || document.body.clientWidth;
@@ -68,11 +71,25 @@ export default {
       container.appendChild(this.renderer.domElement);
 
       //조명 넣기
-      // var light = new THREE.HemisphereLight(0xffffff, 0x080820, 0.8);
-      // light.position.set(100, 100, 0);
-      // this.scene.add(light);
+      var light = new THREE.HemisphereLight(0xffffff, 0x080820, 0.8);
+      light.position.set(100, 100, 0);
+      this.scene.add(light);
 
       //여기까지가 기본 세팅
+
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+      this.controls.maxDistance = 440;
+
+      // const axes = new THREE.AxesHelper(150);
+      // this.scene.add(axes);
+      //
+      // const gridHelper = new THREE.GridHelper(240, 20,0xFAAFFF,0xAAAAAA);
+      // this.scene.add(gridHelper);
+
+
+
+    },
+    objectReady(){
 
       //
       const wallWidth = this.distance * this.totalNum + this.distance;
@@ -96,17 +113,6 @@ export default {
         this.addBox(i);
         // console.log(i);
       }
-
-      // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-      // this.controls.maxDistance = 440;
-      //
-      // const axes = new THREE.AxesHelper(150);
-      // this.scene.add(axes);
-      //
-      // const gridHelper = new THREE.GridHelper(240, 20,0xFAAFFF,0xAAAAAA);
-      // this.scene.add(gridHelper);
-
-
 
     },
     addBox(i){
@@ -139,7 +145,7 @@ export default {
     },
 
 
-    animate(){
+    animateAction(){
       //moveX += (targetNum - moveX) * 0.05;
       //this.galleryGroup.position.x = this.moveX;
 
@@ -147,7 +153,7 @@ export default {
 
       //this.camera.updateProjectionMatrix();
       this.renderer.render(this.scene, this.camera);
-      requestAnimationFrame(this.animate);
+      requestAnimationFrame(this.animateAction);
     },
 
   }
