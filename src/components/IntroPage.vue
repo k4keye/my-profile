@@ -29,10 +29,10 @@ export default {
       WIDTH : 0,
       HEIGHT : 0,
       cameraY : 80,
-      cameraZ : 440,
+      cameraZ : 640,
       isAnimate : false,
       loadingImage : 0,
-      objectZ : 0,
+      objectZ : 640,
 
     }
   },
@@ -63,6 +63,11 @@ export default {
       var light = new THREE.HemisphereLight(0xffffff, 0x080820, 0.8);
       light.position.set(100, 100, 0);
       this.scene.add(light);
+
+      const near = 100;
+      const far = 150;
+      const color = "#000000";
+      this.scene.fog = new THREE.Fog(color, near, far);
 
       // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
       // this.controls.maxDistance = 440;
@@ -102,9 +107,11 @@ export default {
       //this.controls.update();
       //this.camera.lookAt(this.scene.position);
 
-      if(this.totalNum <= this.loadingImage){
-
-        if(this.cameraZ > 2){
+      // if(this.totalNum <= this.loadingImage){
+      //
+      //
+      // }
+        if(this.cameraZ > 6){
           this.cameraZ = this.cameraZ - 0.9;
         }
         if(this.cameraY > 2.5){
@@ -114,10 +121,10 @@ export default {
         this.camera.position.y =  this.cameraY;
 
         //끝
-        if(this.cameraZ <= 2){
-          this.$router.push("/gallery")
-        }
-      }
+        // if(this.cameraZ <= 2){
+        //   this.$router.push("/gallery")
+        // }
+
 
 
       this.camera.updateProjectionMatrix();
@@ -157,14 +164,14 @@ export default {
         const cardMesh = new THREE.Mesh(geometry, material);
         cardMesh.castShadow = true;
         // cardMesh.receiveShadow = true;
-        let x = Math.random() * 250 - 150; // - 100 ~ 100 까지 랜덤
+        let x = Math.random() * 120 - 50; // - 100 ~ 100 까지 랜덤
         // let y = i * 5;
-        let y = Math.random() * 220 - 70;
+        let y = Math.random() * 150 - 70;
         //let z = Math.random() * 400 - 10;
 
         cardMesh.position.set(x, y, this.objectZ); //카드 위치 지정
-        cardMesh.rotation.set(Math.random() * 30, 0, Math.random() * 10); //카드의 회전 지정
-        this.objectZ +=3.5
+        cardMesh.rotation.set(Math.random() * 5, 0, Math.random() * 5); //카드의 회전 지정
+        this.objectZ -= 10
         this.scene.add(cardMesh);
         this.loadingImage++;
       });
