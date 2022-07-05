@@ -2,6 +2,8 @@ import { createWebHistory, createRouter } from "vue-router";
 import IntroPage from '../components/IntroPage';
 import GalleryPage from '../components/GalleryPage';
 import HelloWorld from '../components/HelloWorld';
+import EarthMapPage from '../components/EarthMapPage';
+import KoreaPage from '../components/KoreaPage';
 
 import AppVue from '../App';
 
@@ -26,6 +28,21 @@ const routes = [
         name: "gallery",
         component: GalleryPage,
     },
+    {
+        path: "/earth",
+        name: "earth",
+        component: EarthMapPage,
+    },
+    {
+        path: "/korea",
+        name: "korea",
+        component: KoreaPage,
+    },
+    // {
+    //     path: "*",
+    //     name: "earth",
+    //     component: EarthMapPage,
+    // },
     // {
     //     path: "/about",
     //     name: "About",
