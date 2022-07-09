@@ -80,11 +80,11 @@ export default {
       this.controls = new OrbitControls(this.camera, this.renderer.domElement);
       this.controls.maxDistance = 440;
 
-      // const axes = new THREE.AxesHelper(150);
-      // this.scene.add(axes);
-      //
-      // const gridHelper = new THREE.GridHelper(240, 20,0xFAAFFF,0xAAAAAA);
-      // this.scene.add(gridHelper);
+      const axes = new THREE.AxesHelper(150);
+      this.scene.add(axes);
+
+      const gridHelper = new THREE.GridHelper(240, 20,0xFAAFFF,0xAAAAAA);
+      this.scene.add(gridHelper);
 
 
 

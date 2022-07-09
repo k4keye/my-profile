@@ -35,9 +35,8 @@ export default {
       WIDTH : 0,
       HEIGHT : 0,
       cameraY : 0,
-      cameraZ : 100,
-      isAnimate : false,
-      loadingImage : 0,
+      cameraZ : 70,
+      temp : 0,
 
     }
   },
@@ -93,13 +92,15 @@ export default {
 
       this.scene.add(this.galleryGroup);
 
-      this.addBaseMap();
+      this.addBaseMap(); //맵 세팅
       // for (let i = 0; i <= this.totalNum; i++) {
       //   this.addBox(i);
       //   // console.log(i);
       // }
 
     },
+
+
     addBaseMap(){
       const imageMap = new THREE.TextureLoader().load(
           require( "../assets/korea.png" )
@@ -132,36 +133,6 @@ export default {
 
 
     },
-    // addBox(i){
-    //   const imageMap = new THREE.TextureLoader().load(
-    //       require("../assets/korea.png")
-    //   );
-    //   const geometry = new THREE.BoxGeometry(32, 88, 1);
-    //   const material = new THREE.MeshPhongMaterial({
-    //     map: imageMap,
-    //   });
-    //   const boxMesh = new THREE.Mesh(geometry, material);
-    //   boxMesh.castShadow = true;
-    //   let x = i * this.distance;
-    //   let y = 0; //Math.random() * 40 - 5;
-    //   let z = 0;
-    //   boxMesh.position.set(x, y, z);
-    //   this.galleryGroup.add(boxMesh);
-    //
-    //   //조명 넣기
-    //   const spotLight = new THREE.SpotLight(0xffffff, 1.2);
-    //   spotLight.position.set(x, 30, 30);
-    //   spotLight.angle = Math.PI / 6;
-    //   spotLight.penumbra = 0.2;
-    //   spotLight.decay = 1;
-    //   spotLight.distance = 70;
-    //   spotLight.target = boxMesh;
-    //   spotLight.castShadow = true;
-    //
-    //
-    //
-    //   this.galleryGroup.add(spotLight);
-    // },
 
 
     animateAction(){
@@ -171,6 +142,28 @@ export default {
       //this.camera.lookAt(this.scene.position);
 
       //this.camera.updateProjectionMatrix();
+      // this.temp = this.temp + 0.01;
+      //
+      // if(this.temp <= 0.5){
+      //   console.log("temp :" +this.temp);
+      //   this.camera.rotation.x = this.temp;
+      // }
+      // if(this.temp <= 10){
+      //   this.camera.position.y = this.temp;
+      // }
+      // if(this.temp <= 1.5){
+      //   this.galleryGroup.rotation.x = this.temp;
+      //   this.camera.position.z = this.temp;
+      // }
+      // if(this.temp <= 100){
+      //   this.camera.position.y = this.temp;
+      // }
+
+
+
+
+
+      //this.galleryGroup.rotateX(this.temp)
       this.renderer.render(this.scene, this.camera);
       requestAnimationFrame(this.animateAction);
     },
