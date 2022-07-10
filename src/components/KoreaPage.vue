@@ -93,6 +93,7 @@ export default {
       this.scene.add(this.galleryGroup);
 
       this.addBaseMap(); //맵 세팅
+      this.addPin();
       // for (let i = 0; i <= this.totalNum; i++) {
       //   this.addBox(i);
       //   // console.log(i);
@@ -134,7 +135,34 @@ export default {
 
     },
 
+    /**
+     * 지역 대 분류 별로 핀을 찍는다.
+     */
+    addPin(){
+      const box = new THREE.BoxGeometry(1, 3, 1);
+      const material = new THREE.MeshBasicMaterial({
+        transparent: true,
+        color : 0xF2DEE,
+      });
+      const boxMesh = new THREE.Mesh(box, material);
+      boxMesh.rotateX(11)
+      boxMesh.position.set(0, 20, 2);
 
+      this.pinGroup = new THREE.Group();
+      this.pinGroup.add(boxMesh);
+
+
+      const mesh = boxMesh.clone();
+      mesh.position.y = 30;
+      this.pinGroup.add(mesh);
+
+      const mesh2 = boxMesh.clone();
+      mesh2.position.set(10,10,2);
+      this.pinGroup.add(mesh2);
+
+      this.galleryGroup.add(this.pinGroup);
+
+    },
     animateAction(){
       //moveX += (targetNum - moveX) * 0.05;
       //this.galleryGroup.position.x = this.moveX;
